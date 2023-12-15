@@ -57,6 +57,16 @@ def write_log(gid, cid, message):
                 print(
                     f"Could Not Log {message.id}:{message.content}:{datetime.datetime.now().strftime('%H%M%S')}")
 
+def gen_app_users():
+    with open(f"users.txt","w") as f:
+        f.write("716390085896962058")
+    return ["716390085896962058"]
+
+def update_app_users(userlist:str,id:int):
+    userlist.append(id)
+    with open(f"users.txt","w") as f:
+        f.write(userlist)
+    return userlist
 
 @client.event
 async def on_ready():

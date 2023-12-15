@@ -7,6 +7,7 @@ approved_channels = [
     1174005255189569587,
 #    1085999031047704658
 ]
+approved_users = open("users.txt", "r").read().split("\n") if os.path.exists("users.txt") else gen_app_users()
 pokemon_have = {}
 cheating=True
 
@@ -34,16 +35,16 @@ async def on_message(ctx):
                 print(ctx.embeds[0].footer.text)
                 page_count = int(ctx.embeds[0].footer.text.split(
                     " ")[5][:-1])/20
+                print(page_count,page)
                 page = int(ctx.embeds[0].footer.text.split(
                     " ")[2].split("–")[1])//20
                 if int(str(page_count).split(".")[1]) > 0:
                     page_count = int(str(page_count).split(".")[0])+1
-                print(page)
                 print(pokemon_have)
                 sleep = 5
                 print(f"sleeping for {sleep} seconds")
                 time.sleep(sleep)
-                if page == page_count:
+                if page >= page_count:
                     cheating=True
                     return
                 await ctx.channel.send(f"<@716390085896962058> p {page+1}")
@@ -94,4 +95,6 @@ async def on_message(ctx):
             if message=="":
                 message=f"No pokemon found with the search term *{poke}\*"  
             await ctx.channel.send(message)
+        elif "#!libsearch" in ctx.content and ctx.author.id in approved_users:
+            pass
 client.run(TOKEN)
