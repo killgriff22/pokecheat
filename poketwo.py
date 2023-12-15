@@ -39,6 +39,8 @@ async def on_message(ctx):
                 page = int(ctx.embeds[0].footer.text.split(
                     " ")[2].split("–")[1])//20
                 print(page_count,page)
+                secs=page_count*5-(page_count*5-page*5)
+                print(f"time to completion: {page_count-page} pages & {secs} seconds ({secs//60//60} hours {secs//60} minutes)")
                 if int(str(page_count).split(".")[1]) > 0:
                     page_count = int(str(page_count).split(".")[0])+1
                 print(pokemon_have)
