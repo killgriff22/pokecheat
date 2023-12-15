@@ -11,10 +11,10 @@ approved_channels = [
 approved_users = open("users.txt", "r").read().split("\n") if os.path.exists("users.txt") else gen_app_users()
 pokemon_have = {}
 cheating=True
-
+amount_have=0
 @client.event
 async def on_message(ctx):
-    global lastmessage, lastpoke, pokemon_have,cheating
+    global lastmessage, lastpoke, pokemon_have,cheating,amount_have
     if not ctx.channel.id in approved_channels:
         return
     print(ctx.content)
@@ -28,28 +28,34 @@ async def on_message(ctx):
                 description = (ctx.embeds[0].description.split("\n"))
                 for item in description:
                     split = item.split("`")[2].split(" ")[1].split("**")[0]
+                    poke_index = item.split("`")[1]
                     if split in pokemon_have.keys():
-                        pokemon_have.update({split: pokemon_have[split] + 1})
+                        pokemon_have.update({split: [pokemon_have[split][0] + 1,pokemon_have[split][1]+[poke_index]]})
                     else:
-                        pokemon_have.update({split: 1})
+                        pokemon_have.update({split: [1,[poke_index]]})
                 # determine page number, and number of pages
                 print(ctx.embeds[0].footer.text)
                 page_count = int(ctx.embeds[0].footer.text.split(
                     " ")[5][:-1])/20
                 page = int(ctx.embeds[0].footer.text.split(
                     " ")[2].split("–")[1])//20
-                print(page_count,page)
-                secs=page_count*5-(page_count*5-page*5)
+                to = int(ctx.embeds[0].footer.text.split(
+                    " ")[2].split("–")[1])
+                have = int(ctx.embeds[0].footer.text.split(
+                    " ")[5][:-1])
+                amount_have=have
+                print(page_count//1,page, page>=page_count//1)
+                secs=(page_count*5-page*5)
                 print(f"time to completion: {page_count-page} pages & {secs} seconds ({secs//60//60} hours {secs//60} minutes)")
                 if int(str(page_count).split(".")[1]) > 0:
                     page_count = int(str(page_count).split(".")[0])+1
                 print(pokemon_have)
+                if to == have:
+                    cheating=True
+                    return
                 sleep = 5
                 print(f"sleeping for {sleep} seconds")
                 time.sleep(sleep)
-                if page >= page_count//1:
-                    cheating=True
-                    return
                 await ctx.channel.send(f"<@716390085896962058> p {page+1}")
                 return
             if not "wild" in ctx.embeds[0].title.lower():
@@ -57,11 +63,13 @@ async def on_message(ctx):
             await ctx.channel.send(f"<@716390085896962058> h")
         if "Congratulations" in ctx.content:
             await ctx.channel.send(":3")
+            amount_have+=1
             split = ctx.content.split(" ")[7][:-1]
             if split in pokemon_have.keys():
-                pokemon_have.update({split: pokemon_have[split] + 1})
+                pokemon_have.update({split: [pokemon_have[split] + 1,[amount_have]]})
             else:
-                pokemon_have.update({split: 1})
+                pokemon_have.update({split: [1,[amount_have]]})
+            print(pokemon_have[split])
         elif "That is the wrong pokémon!" in ctx.content:
             await ctx.channel.send(f"<@716390085896962058> h")
         elif 'The pokémon is' in ctx.content and cheating:
