@@ -36,9 +36,9 @@ async def on_message(ctx):
                 print(ctx.embeds[0].footer.text)
                 page_count = int(ctx.embeds[0].footer.text.split(
                     " ")[5][:-1])/20
-                print(page_count,page)
                 page = int(ctx.embeds[0].footer.text.split(
                     " ")[2].split("–")[1])//20
+                print(page_count,page)
                 if int(str(page_count).split(".")[1]) > 0:
                     page_count = int(str(page_count).split(".")[0])+1
                 print(pokemon_have)
