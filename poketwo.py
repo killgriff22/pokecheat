@@ -60,7 +60,7 @@ async def on_message(ctx):
                 pokemon_have.update({split: 1})
         elif "That is the wrong pokémon!" in ctx.content:
             await ctx.channel.send(f"<@716390085896962058> h")
-        elif 'The pokémon is' in ctx.contenta and cheating:
+        elif 'The pokémon is' in ctx.content and cheating:
             poke = ctx.content.split(' ')[3:]
             if len(poke) > 1:
                 poke = f"{poke[0]} {poke[1][:-1]}".replace("\\", "")
