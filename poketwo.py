@@ -8,11 +8,11 @@ approved_channels = [
 #    1085999031047704658
 ]
 pokemon_have = {}
-
+cheating=True
 
 @client.event
 async def on_message(ctx):
-    global lastmessage, lastpoke, pokemon_have
+    global lastmessage, lastpoke, pokemon_have,cheating
     if not ctx.channel.id in approved_channels:
         return
     print(ctx.content)
@@ -22,6 +22,7 @@ async def on_message(ctx):
         if ctx.embeds:
             if "your pokémon" in ctx.embeds[0].title.lower():
                 # determine pokemon on page
+                cheating=False
                 description = (ctx.embeds[0].description.split("\n"))
                 for item in description:
                     split = item.split("`")[2].split(" ")[1].split("**")[0]
@@ -43,6 +44,7 @@ async def on_message(ctx):
                 print(f"sleeping for {sleep} seconds")
                 time.sleep(sleep)
                 if page == page_count:
+                    cheating=True
                     return
                 await ctx.channel.send(f"<@716390085896962058> p {page+1}")
                 return
