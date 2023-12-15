@@ -59,8 +59,8 @@ def write_log(gid, cid, message):
 
 def gen_app_users():
     with open(f"users.txt","w") as f:
-        f.write("716390085896962058")
-    return ["716390085896962058"]
+        f.write("")
+    return []
 
 def update_app_users(userlist:str,id:int):
     userlist.append(id)

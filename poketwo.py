@@ -95,6 +95,5 @@ async def on_message(ctx):
             if message=="":
                 message=f"No pokemon found with the search term *{poke}\*"  
             await ctx.channel.send(message)
-        elif "#!libsearch" in ctx.content and ctx.author.id in approved_users:
-            pass
+        #elif "#!libsearch" in ctx.content and ctx.author.id in approved_users:   
 client.run(TOKEN)
