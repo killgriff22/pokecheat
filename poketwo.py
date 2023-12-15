@@ -66,7 +66,7 @@ async def on_message(ctx):
             amount_have+=1
             split = ctx.content.split(" ")[7][:-1]
             if split in pokemon_have.keys():
-                pokemon_have.update({split: [pokemon_have[split] + 1,[amount_have]]})
+                pokemon_have.update({split: [pokemon_have[split][0] + 1,[amount_have]]})
             else:
                 pokemon_have.update({split: [1,[amount_have]]})
             print(pokemon_have[split])
