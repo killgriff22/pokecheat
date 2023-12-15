@@ -2,6 +2,7 @@ from config import *
 from pokes import pokemon as names
 import datetime
 import time
+from token_ import *
 lastpoke = ""
 approved_channels = [
     1174005255189569587,
