@@ -45,7 +45,7 @@ async def on_message(ctx):
                 sleep = 5
                 print(f"sleeping for {sleep} seconds")
                 time.sleep(sleep)
-                if page >= page_count:
+                if page >= page_count//1:
                     cheating=True
                     return
                 await ctx.channel.send(f"<@716390085896962058> p {page+1}")
